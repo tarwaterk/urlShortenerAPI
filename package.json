@@ -1,0 +1,23 @@
+{
+  "name": "urlshortenerapi",
+  "version": "1.0.0",
+  "description": "API to create new URLs that redirect to given URLs",
+  "main": "index.js",
+  "engines": {
+    "node": "4.5.0"
+  },
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarwaterk/urlShortenerAPI.git"
+  },
+  "author": "Kevin Tarwater",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tarwaterk/urlShortenerAPI/issues"
+  },
+  "homepage": "https://github.com/tarwaterk/urlShortenerAPI#readme"
+}
