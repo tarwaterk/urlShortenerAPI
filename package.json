@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/tarwaterk/urlShortenerAPI/issues"
   },
-  "homepage": "https://github.com/tarwaterk/urlShortenerAPI#readme"
+  "homepage": "https://github.com/tarwaterk/urlShortenerAPI#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26"
+  }
 }
