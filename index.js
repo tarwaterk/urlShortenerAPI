@@ -10,7 +10,7 @@ var redirect = function(shortUrlSlug) {
 
 } 
 
-app.get("/:protocol//:longURL([a-zA-Z\.\-\/]{0,})", function(req, res) {
+app.get("/:protocol//:longURL([a-zA-Z0-9\.\-\/]{0,})", function(req, res) {
 	console.log(req.params);
 	var dbEntry = {};
 	var isURL = true; //needs to be completed
