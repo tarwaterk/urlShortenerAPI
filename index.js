@@ -5,28 +5,6 @@ var app = express();
 var port = process.env.PORT || 3000;
 var mongoURL = "mongodb://localhost:27017/urlshortener";
 
-var createShortURL = function(longURL) {
-	var dbEntry = {};
-
-	mongo.connect(mongoURL, function(err, db) {
-		console.log("Connected to server");
-		var shortURL = (Math.random() * 10000).toFixed(0);
-
-		var collection = db.collection("shortURLs");
-
-		collection.insert({"shortURL" : shortURL,
-							"longURL": longURL}, function(err, result) {
-								//console.log(result.ops);
-								dbEntry = result.ops;
-								console.log(dbEntry);
-							});
-		
-		db.close();
-	});
-
-	return dbEntry;
-};
-
 var redirect = function(shortUrlSlug) {
 
 } 
@@ -36,15 +14,39 @@ app.get("/:protocol//:longURL([a-zA-Z\.\-\/]{0,})", function(req, res) {
 	var dbEntry = {};
 	var isURL = true; //needs to be completed
 	if(isURL) {
-		dbEntry = createShortURL(req.params.protocol + "//" + req.params.longURL);
+		var completeUrl = req.params.protocol + "//" + req.params.longURL;
+		mongo.connect(mongoURL, function(err, db) {
+		console.log("Connected to server");
+		var shortURL = (Math.random() * (9999-1000) + 1000).toFixed(0);
+
+		var collection = db.collection("shortURLs");
+
+		collection.insert({"shortURL" : shortURL,
+							"longURL": completeUrl}, function(err, result) {
+								//console.log(result.ops);
+								var dbEntry = {"short": result.ops[0].shortURL,
+												"long": result.ops[0].longURL};
+								res.send(dbEntry);
+							});
+			
+			db.close();
+		});
 	}
-	res.send(dbEntry);
 });
 
 app.get("/:shortUrlSlug([0-9]{4})", function(req, res) {
-	console.log(req.params.shortUrlSlug);
+	mongo.connect(mongoURL, function(err, db) {
+		var collection = db.collection("shortURLs");
+		console.log(req.params.shortUrlSlug);
 
-	res.send("redirect should have been called");
+		collection.find({"shortURL": req.params.shortUrlSlug}).toArray(function(err, result) {
+			if(err) throw err;
+			res.redirect(result[0].longURL);
+		})
+		db.close();
+	})
+
+	//res.send("redirect should have been called");
 });
 
 app.listen(port, function(req, res) {
