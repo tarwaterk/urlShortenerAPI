@@ -23,7 +23,7 @@ app.get("/:protocol//:longURL([a-zA-Z\.\-\/]{0,})", function(req, res) {
 
 		collection.insert({"shortURL" : shortURL,
 							"longURL": completeUrl}, function(err, result) {
-								//console.log(result.ops);
+								if(err) throw err;
 								var dbEntry = {"short": result.ops[0].shortURL,
 												"long": result.ops[0].longURL};
 								res.send(dbEntry);
