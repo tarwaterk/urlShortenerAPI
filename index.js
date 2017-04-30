@@ -3,7 +3,8 @@ var mongo = require("mongodb").MongoClient;
 
 var app = express();
 var port = process.env.PORT || 3000;
-var mongoURL = "mongodb://localhost:27017/urlshortener";
+var mongoURL = process.env.MONGODB_URI || "mongodb://localhost:27017/urlshortener";
+//var mongoURL = "mongodb://localhost:27017/urlshortener";
 
 var redirect = function(shortUrlSlug) {
 
