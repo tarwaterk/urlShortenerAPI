@@ -4,7 +4,6 @@ var mongo = require("mongodb").MongoClient;
 var app = express();
 var port = process.env.PORT || 3000;
 var mongoURL = process.env.MONGODB_URI || "mongodb://localhost:27017/urlshortener";
-//var mongoURL = "mongodb://localhost:27017/urlshortener";
 
 var redirect = function(shortUrlSlug) {
 
@@ -45,14 +44,10 @@ app.get("/:shortUrlSlug([0-9]{4})", function(req, res) {
 			res.redirect(result[0].longURL);
 		})
 		db.close();
-	})
-
-	//res.send("redirect should have been called");
+	});
 });
 
 app.listen(port, function(req, res) {
 	console.log("App started at http://localhost:" + port);
 });
 
-// Need to find out how to hold off on returning from functions until the database opertions
-// are finished
